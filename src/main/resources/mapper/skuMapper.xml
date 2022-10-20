@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.web2022.dao.SkuDao">
+    <select id="find" resultType="com.web.web2022.model.domain.Sku">
+        select id, product_id as "product.mid", indexes, title, price, stock, image
+        from sku
+        where product_id = #{productId}
+    </select>
+
+    <select id="findById" resultType="com.web.web2022.model.domain.Sku">
+        select id, product_id as "product.mid", indexes, title, price, stock, image
+        from sku
+        where id = #{id}
+    </select>
+
+    <update id="reduceStock">
+        update sku
+        set stock = stock - #{amount}
+        where id = #{id}
+          and stock - #{amount} >= 0
+    </update>
+</mapper>

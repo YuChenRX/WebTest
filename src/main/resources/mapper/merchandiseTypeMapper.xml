@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.web2022.dao.MerchandiseTypeDao">
+
+    <select id="selectType" resultType="com.web.web2022.model.domain.MerchandiseType">
+        SELECT *
+        FROM merchandise_type
+        WHERE
+        <choose>
+            <when test="belongId == null">
+                belong_id IS NULL
+            </when>
+            <when test="belongId != null">
+                belong_id = #{belongId}
+            </when>
+        </choose>
+    </select>
+
+    <select id="selectMerchandiseOfType" resultType="com.web.web2022.model.domain.Merchandise">
+        SELECT mid, name, time, url, price
+        FROM (SELECT m.*, c.url
+              FROM merchandise m
+                       LEFT JOIN carousel c
+                                 ON m.mid = c.mid
+              GROUP BY mid) tmp
+        WHERE type_id >= #{typeId}
+    </select>
+
+
+</mapper>

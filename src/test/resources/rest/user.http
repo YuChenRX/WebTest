@@ -1,0 +1,10 @@
+### Login
+POST {{baseUrl}}/signin
+Content-Type: application/json
+
+{
+  "username": "1",
+  "password": "1"
+}
+
+> {% client.global.set("token", response.body.token); %}

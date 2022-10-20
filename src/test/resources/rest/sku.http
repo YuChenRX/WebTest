@@ -1,0 +1,28 @@
+### calc price
+POST {{baseUrl}}/sku/calc
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+[
+  {
+    "amount": 2,
+    "skuId": 4
+  }
+]
+
+
+### buy item
+POST {{baseUrl}}/sku/buy
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+[
+  {
+    "amount": 1,
+    "skuId": 4
+  },
+  {
+    "amount": 1,
+    "skuId": 3
+  }
+]

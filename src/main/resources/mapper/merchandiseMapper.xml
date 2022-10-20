@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.web2022.dao.MerchandiseDao">
+    <resultMap id="productMap" type="com.web.web2022.model.domain.Merchandise" autoMapping="true">
+        <result column="sku" property="twister" typeHandler="com.web.web2022.typehandler.TwisterTypeHandler"/>
+    </resultMap>
+
+    <select id="selectMerchandiseInfo" resultMap="productMap">
+        SELECT *
+        FROM merchandise
+        WHERE mid = #{mid}
+    </select>
+
+    <select id="selectMerchandiseCarousel" resultType="java.lang.String">
+        SELECT url
+        FROM carousel
+        WHERE mid = #{mid}
+    </select>
+
+    <select id="selectMerchandiseList" resultType="com.web.web2022.model.domain.Merchandise">
+        SELECT mid, name, time, url as 'singleUrl', sales_num, browse_num
+        <choose>
+            <when test="unit == 0">
+                ,price
+            </when>
+            <when test="unit == 1">
+                ,score
+            </when>
+        </choose>
+        FROM
+        (SELECT m.*, c.url
+        FROM merchandise m LEFT JOIN carousel c
+        ON m.mid = c.mid
+        <if test="null!=keywords and ''!=keywords">
+            WHERE m.name LIKE concat('%', #{keywords}, '%')
+        </if>) tmp
+        <if test="typeId > 0">
+            WHERE type_id = #{typeId}
+            <if test="unit == 1">
+                AND `score` IS NOT NULL
+            </if>
+        </if>
+
+        <choose>
+            <when test="sortType == 0">
+                ORDER BY `sales_num` DESC
+            </when>
+            <when test="sortType == 1 ">
+                <if test="unit == 1">
+                    ORDER BY `score`
+                </if>
+                <if test="unit != 1">
+                    ORDER BY `price`
+                </if>
+            </when>
+            <when test="sortType == 2">
+                ORDER BY `price` DESC
+            </when>
+            <when test="sortType == 3">
+                ORDER BY `time` DESC
+            </when>
+            <when test="sortType == 4">
+                ORDER BY `browse_num` DESC
+            </when>
+        </choose>
+        LIMIT #{page},#{num}
+
+    </select>
+    <select id="selectMerchandiseByMid" resultType="com.web.web2022.model.domain.Merchandise">
+        SELECT mid, name, time, url as 'singleUrl', sales_num, browse_num, price
+        FROM (SELECT m.*, c.url
+              FROM merchandise m
+                       LEFT JOIN carousel c ON m.mid = c.mid) tmp
+        where mid = #{mid}
+    </select>
+
+    <update id="updateMerchandiseBrowse">
+        UPDATE merchandise
+        SET browse_num = browse_num + 1
+        WHERE mid = #{mid}
+    </update>
+</mapper>

@@ -1,0 +1,11 @@
+### fetch all orders
+GET {{baseUrl}}/orders
+Authorization: Bearer {{token}}
+
+### fetch all orders
+GET {{baseUrl}}/orders?state=PAID
+Authorization: Bearer {{token}}
+
+### count
+GET {{baseUrl}}/orders/count
+Authorization: Bearer {{token}}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.web2022.dao.AddressDao">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        insert into address(name, phone_number, province, city, area_code, address_line_1, address_line_2, def,
+                            owner_id)
+        values (#{model.name}, #{model.phoneNumber}, #{model.province}, #{model.city}, #{model.areaCode},
+                #{model.addressLine1}, #{model.addressLine2}, #{model.def},
+                #{model.owner.id})
+    </insert>
+
+    <update id="modify" useGeneratedKeys="true" keyProperty="id">
+        update address
+        set name           = #{model.name},
+            phone_number   = #{model.phoneNumber},
+            province       = #{model.province},
+            city           = #{model.city},
+            address_line_1 = #{model.addressLine1},
+            address_line_2 = #{model.addressLine2},
+            `def`          = #{model.def},
+            area_code      = #{model.areaCode}
+        where id = #{model.id}
+    </update>
+
+    <delete id="deleteById">
+        delete
+        from address
+        where id = #{id}
+          and owner_id = #{ownerId}
+    </delete>
+
+    <select id="find" resultType="com.web.web2022.model.domain.Address">
+        select *
+        from address
+        where owner_id = #{ownerId}
+    </select>
+
+    <select id="findById" resultType="com.web.web2022.model.domain.Address">
+        select *
+        from address
+        where owner_id = #{ownerId}
+          and id = #{id}
+    </select>
+
+    <select id="findDefault" resultType="com.web.web2022.model.domain.Address">
+        select *
+        from address
+        where def = true
+          and owner_id = #{ownerId}
+    </select>
+</mapper>

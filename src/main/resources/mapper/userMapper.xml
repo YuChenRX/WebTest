@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.web2022.dao.UserDao">
+    <select id="find" resultType="com.web.web2022.model.domain.User">
+        select *
+        from user
+        where username = #{username}
+    </select>
+
+    <select id="findById" resultType="com.web.web2022.model.domain.User">
+        select *
+        from user
+        where id = #{id}
+    </select>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        insert into user(username, password, name, balance, credit, topped_up_amount, expenditure)
+        values (#{model.username}, #{model.password}, #{model.name}, #{model.balance}, #{model.credit},
+                #{model.toppedUpAmount}, #{model.expenditure})
+    </insert>
+
+    <update id="modify" useGeneratedKeys="true" keyProperty="id">
+        update user
+        set name             = #{model.name},
+            balance          = #{model.balance},
+            credit           = #{model.credit},
+            topped_up_amount = #{model.toppedUpAmount},
+            expenditure      = #{model.expenditure}
+        where id = #{model.id}
+    </update>
+</mapper>

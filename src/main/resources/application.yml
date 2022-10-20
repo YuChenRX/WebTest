@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.21.101:3306/web_match
+    driver-class-name: 'com.mysql.cj.jdbc.Driver'
+    username: root
+    password: 123
+
+mybatis:
+  mapper-locations: classpath:/mapper/**.xml
+  configuration:
+    #数据库下划线转驼峰
+    map-underscore-to-camel-case: true
+  type-handlers-package: com.web.web2022.typehandler
+
+logging:
+  level:
+    com:
+      web:
+        web2022:
+          dao: trace
+server:
+  port: 8082

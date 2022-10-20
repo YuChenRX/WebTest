@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.web2022.dao.OrderSkuDao">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        insert into order_sku(order_id, sku_id, amount)
+        values
+        <foreach collection="models" item="model" separator=",">
+            (#{model.order.id}, #{model.sku.id}, #{model.amount})
+        </foreach>
+    </insert>
+</mapper>
