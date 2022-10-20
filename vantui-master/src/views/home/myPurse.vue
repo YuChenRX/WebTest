@@ -50,28 +50,6 @@ export default {
       admin: {},
       rechargePlan: []
     }
-  },
-  methods: {
-    recharge(rid) {
-      this.postRequst('/top_up_plans/' + rid + '/top_up').then(resp => {
-        this.initAdmin()
-        this.initPlans()
-      })
-    },
-    initPlans() {
-      this.getRequst('/top_up_plans').then(resp => {
-        this.rechargePlan = resp
-      })
-    },
-    initAdmin() {
-      this.getRequst("/users/me").then((resp) => {
-        this.admin = resp
-      });
-    },
-  },
-  mounted() {
-    this.initPlans()
-    this.initAdmin()
   }
 }
 </script>

@@ -12,7 +12,6 @@ import editAddress from "@/views/address/editAddress";
 import addAddress from "@/views/address/addAddress";
 import down from "@/views/home/down";
 import classification from "@/views/home/classification";
-import goodsList from "@/views/goods/goodsList";
 import scoreGoods from "@/views/goods/scoreGoods";
 import goodsDetailed from "@/views/goods/goodsDetailed";
 import myPurse from "@/views/home/myPurse";
@@ -79,23 +78,23 @@ const routes = [
                     index: 1
                 }
             },
-            {
-                path: 'goodsList/keywords/:words',
-                components: {
-                    default: goodsList,
-                    down: down
-                },
-                props: {
-                    default: true
-                }
-            },
-            {
-                path: 'goodsList/',
-                components: {
-                    default: goodsList,
-                    down: down
-                },
-            },
+            // {
+            //     path: 'goodsList/keywords/:words',
+            //     components: {
+            //         default: goodsList,
+            //         down: down
+            //     },
+            //     props: {
+            //         default: true
+            //     }
+            // },
+            // {
+            //     path: 'goodsList/',
+            //     components: {
+            //         default: goodsList,
+            //         down: down
+            //     },
+            // },
             {
                 path: 'scoreGoods',
                 components: {

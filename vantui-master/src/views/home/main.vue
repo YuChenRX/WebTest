@@ -8,10 +8,12 @@
 			</van-swipe-item>
 		</van-swipe>
 
-		<van-grid>
+		<van-grid :column-num="2">
 			<van-grid-item icon="cart-o" text="全部商品" to="/navigation/goodsList" />
 			<van-grid-item icon="coupon-o" text="优惠券" />
-			<van-grid-item icon="bag-o" text="积分商品" to="/navigation/scoreGoods" />
+    </van-grid>
+    <van-grid :column-num="2">
+			<van-grid-item icon="bag-o" text="积分商品"/>
 			<van-grid-item icon="gift-o" text="积分签到" @click="clockIn()" />
 		</van-grid>
 	</div>
