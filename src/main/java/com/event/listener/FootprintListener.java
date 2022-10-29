@@ -39,7 +39,7 @@ public class FootprintListener {
 
     public void updateTimestamp(FootPrint footPrint) {
         footPrint.setFtime(new Date());
-        footPrintMapper.updateById(footPrint);
+        footPrintMapper.update(footPrint, new LambdaQueryWrapper<FootPrint>().eq(FootPrint::getFid, footPrint.getFid()));
     }
 
     public void add(Commodity commodity, int uid) {
