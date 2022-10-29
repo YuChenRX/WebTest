@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CollectMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.Collect">
+        <id column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="cname" jdbcType="VARCHAR" property="cname"/>
+        <result column="collector" jdbcType="VARCHAR" property="collector"/>
+        <result column="collectstate" jdbcType="TINYINT" property="collectstate"/>
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="comid" jdbcType="INTEGER" property="comid"/>
+        <result column="cdate" jdbcType="DATE" property="cdate"/>
+        <association property="commodity" column="comid"  javaType="com.pojo.Commodity">
+            <id column="commodityID" jdbcType="INTEGER" property="commodityID"/>
+            <result column="picture" jdbcType="VARCHAR" property="picture"/>
+            <result column="brand" jdbcType="TINYINT" property="brand"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="redname" jdbcType="VARCHAR" property="redname"/>
+            <result column="blackname" jdbcType="VARCHAR" property="blackname"/>
+            <result column="price" jdbcType="DECIMAL" property="price"/>
+            <result column="spell" jdbcType="VARCHAR" property="spell"/>
+            <result column="BYBT" jdbcType="TINYINT" property="BYBT"/>
+            <result column="adtime" jdbcType="DATE" property="adtime"/>
+            <result column="caid" jdbcType="INTEGER" property="caid"/>
+        </association>
+    </resultMap>
+    <select id="getCollect" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+         collect where cid=#{cid}
+        ORDER BY cdate DESC
+    </select>
+
+    <select id="getAllCollect"  resultMap="BaseResultMap">
+        select * from collect
+    </select>
+    <select id="getAllCollectComm" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select  c.*,cl.* from commodity as c ,collect as cl
+        where c.commodityID=cl.comid and cl.collectstate=1
+          and cl.uid=#{uid}
+        ORDER BY cdate DESC
+    </select>
+
+    <insert id="addCollect" parameterType="com.pojo.Collect">
+        insert into collect(collector,cname,collectstate,uid,comid)
+        values(#{collector},#{cname},1,#{uid},#{comid})
+    </insert>
+
+
+    <!-- 根据id删除某个lie信息 -->
+    <delete id="deleteCollect" parameterType="java.lang.Integer">
+        delete from collect
+        where comid = #{comid,jdbcType=INTEGER}
+    </delete>
+
+    <select id="getCollectbyname" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select  * from collect
+        where cname=#{cname}
+    </select>
+    <select id="getCollectbyname1" resultMap="BaseResultMap">
+        select  * from collect
+        where cname=#{cname} and uid=#{uid}
+    </select>
+    <!-- 根据id更新biao信息 -->
+    <update id="editCollect" parameterType="com.pojo.Collect">
+        update collect
+        set cname=#{cname},
+            collector=#{collector},
+            collectstate=#{collectstate},
+            uid=#{uid},
+            comid=#{comid},
+            cdate=#{cdate}
+        where cid = #{cid,jdbcType=INTEGER}
+
+    </update>
+
+</mapper>

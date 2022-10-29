@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.SiginMapper">
+    <resultMap  id="BaseResultMap" type="com.pojo.Sigin">
+        <id     column="tid"    jdbcType="INTEGER"       property="tid" />
+        <result column="tdate"  jdbcType="DATE"  property="tdate" />
+        <result column="qday"   jdbcType="INTEGER"       property="qday" />
+        <result column="n1"     jdbcType="VARCHAR"   property="n1" />
+        <result column="n2"     jdbcType="VARCHAR"   property="n2" />
+        <result column="n3"     jdbcType="VARCHAR"   property="n3" />
+        <result column="uid" property="uid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getSigin" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            sigin where uid=#{uid}
+    </select>
+
+    <select id="getAllSigin"  resultMap="BaseResultMap">
+        select * from sigin
+    </select>
+
+
+    <!-- 根据id删除某个lie信息 -->
+    <delete id="deleteSigin" parameterType="java.lang.Integer">
+        delete from sigin
+        where tid = #{tid,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 根据id更新biao信息 -->
+    <update id="editSigin" parameterType="com.pojo.Sigin">
+        update sigin set
+                        qday=#{qday}
+        where uid = #{uid,jdbcType=INTEGER}
+    </update>
+
+</mapper>

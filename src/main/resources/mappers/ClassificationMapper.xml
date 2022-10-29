@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ClassificationMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.Classification">
+        <id     column="caid"      jdbcType="INTEGER"  property="caid" />
+        <result column="img"       jdbcType="INTEGER"   property="img" />
+        <result column="title"     jdbcType="VARCHAR"  property="title"  />
+        <result column="index"     jdbcType="INTEGER" property="index"/>
+        <result column="ca1"       jdbcType="VARCHAR"   property="ca1"/>
+        <result column="ca2"       jdbcType="VARCHAR"   property="ca2" />
+    </resultMap>
+
+    <select id="getClassification" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            classification where caid=#{caid}
+    </select>
+    <select id="getClassificationbyname" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from
+            classification where title=#{title}
+    </select>
+    <select id="getAllClassification"  resultMap="BaseResultMap">
+        select * from classification
+    </select>
+</mapper>

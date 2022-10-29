@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.IntergralMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.Intergral">
+        <id column="intergralid" jdbcType="INTEGER" property="intergralid"/>
+        <result column="Integralgoodsname" jdbcType="VARCHAR" property="Integralgoodsname"/>
+        <result column="intergralprice" jdbcType="DECIMAL" property="intergralprice"/>
+        <result column="comid" jdbcType="INTEGER" property="comid"/>
+        <association property="commodity" column="comid"  javaType="com.pojo.Commodity">
+            <id column="commodityID" jdbcType="INTEGER" property="commodityID"/>
+            <result column="picture" jdbcType="VARCHAR" property="picture"/>
+            <result column="brand" jdbcType="TINYINT" property="brand"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="redname" jdbcType="VARCHAR" property="redname"/>
+            <result column="blackname" jdbcType="VARCHAR" property="blackname"/>
+            <result column="price" jdbcType="DECIMAL" property="price"/>
+            <result column="spell" jdbcType="VARCHAR" property="spell"/>
+            <result column="BYBT" jdbcType="TINYINT" property="BYBT"/>
+            <result column="adtime" jdbcType="DATE" property="adtime"/>
+            <result column="caid" jdbcType="INTEGER" property="caid"/>
+        </association>
+    </resultMap>
+
+    <select id="getIntergral" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            intergral where intergralid=#{intergralid}
+    </select>
+    <select id="getIntergralbycomid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            intergral where comid=#{comid}
+    </select>
+    <select id="getAllIntergralComm"  resultMap="BaseResultMap">
+        select up.*,u.*
+        from intergral as u,commodity as up
+        where u.comid=up.commodityID
+    </select>
+    <select id="getAllIntergral"  resultMap="BaseResultMap">
+        select * from intergral
+    </select>
+
+
+
+    <!-- 根据id删除某个lie信息 -->
+    <delete id="deleteIntergral" parameterType="java.lang.Integer">
+        delete from intergral
+        where intergralid = #{intergralid,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 根据id更新biao信息 -->
+    <update id="editIntergral" parameterType="com.pojo.Intergral">
+        update intergral set
+         Integralgoodsname=#{Integralgoodsname},
+         intergralprice=#{intergralprice},
+         comid=#{comid}
+        where intergralid = #{intergralid,jdbcType=INTEGER}
+    </update>
+
+</mapper>

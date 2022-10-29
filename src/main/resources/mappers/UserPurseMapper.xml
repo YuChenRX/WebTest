@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserPurseMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.UserPurse">
+        <id     column="pid" jdbcType="INTEGER" property="pid"/>
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="blance" jdbcType="DECIMAL" property="blance"/>
+        <result column="integral" jdbcType="INTEGER" property="integral"/>
+        <result column="buyafew" jdbcType="INTEGER" property="buyafew"/>
+        <result column="coupon" jdbcType="INTEGER" property="coupon"/>
+        <result column="couponid" jdbcType="INTEGER" property="couponid"/>
+        <result column="ljcz" jdbcType="INTEGER" property="ljcz"/>
+        <result column="xfe" jdbcType="INTEGER" property="xfe"/>
+   <association property="user" column="uid" javaType="com.pojo.User">
+       <id column="uid" jdbcType="INTEGER" property="uid"/>
+       <result column="upassword" jdbcType="VARCHAR" property="upassword"/>
+       <result column="uname" jdbcType="VARCHAR" property="uname"/>
+       <result column="uface" jdbcType="VARCHAR" property="uface"/>
+       <result column="ulname" jdbcType="VARCHAR" property="ulname"/>
+   </association>
+    </resultMap>
+
+    <select id="getUserPurse" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select *
+        from userpurse
+        where pid=#{pid}
+    </select>
+
+
+    <select id="selectALLUserPurse" resultMap="BaseResultMap">
+        select up.*,u.*
+        from user as u,userpurse as up
+        where u.uid=up.uid
+    </select>
+    <select id="getUserPurselist" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select up.*,u.*
+        from user as u,userpurse as up
+        where u.uid=up.uid and u.uid=#{uid}
+    </select>
+    <select id="getAllUserPurse"  resultMap="BaseResultMap">
+        select *
+        from userpurse
+    </select>
+    <insert id="addUserPurse" parameterType="com.pojo.UserPurse">
+        insert into userpurse(uid,blance,integral,buyafew,coupon,couponid,ljcz,xfe)
+        values(#{uid},#{blance},
+               #{integral},#{buyafew},#{coupon},#{couponid},#{ljcz},#{xfe})
+    </insert>
+
+
+    <!-- 根据id删除某个lie信息 -->
+    <delete id="deleteUserPurse" parameterType="java.lang.Integer">
+        delete from userpurse
+        where pid = #{pid,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 根据id更新biao信息 -->
+    <update id="editUserPurse" parameterType="com.pojo.UserPurse">
+    update userpurse
+    set uid=#{uid},blance=#{blance},
+        integral=#{integral},buyafew=#{buyafew},coupon=#{coupon},couponid=#{couponid},
+        ljcz=#{ljcz},xfe=#{xfe}
+    where pid = #{pid,jdbcType=INTEGER}
+</update>
+
+
+   
+    <update id="editcoupon" parameterType="com.pojo.UserPurse">
+        update userpurse
+        set
+            coupon=#{value}
+        where uid = #{uid,jdbcType=INTEGER}
+    </update>
+</mapper>

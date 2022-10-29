@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CommodityguigeMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.Commodityguige">
+        <id     column="id"          jdbcType="INTEGER"         property="id"   />
+        <result column="sumname"     jdbcType="VARCHAR"     property="sumname" />
+        <result column="price"       jdbcType="DOUBLE"      property="price" />
+        <result column="cpid"        jdbcType="INTEGER"         property="cpid" />
+        <result column="gg1"         jdbcType="INTEGER"     property="gg1" />
+        <result column="gg2"         jdbcType="INTEGER"     property="gg2" />
+        <result column="gg3"         jdbcType="INTEGER"     property="gg3" />
+        <result column="comid"       jdbcType="INTEGER"         property="comid"/>
+        <result column="s1"          jdbcType="INTEGER"         property="s1"  />
+        <result column="s2"          jdbcType="INTEGER"         property="s2"  />
+    </resultMap>
+
+    <select id="getCommodityguige" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            commodityguige where comid=#{comid}
+    </select>
+
+    <select id="getAllCommodityguige"  resultMap="BaseResultMap">
+        select * from commodityguige
+    </select>
+
+    <insert id="addCommodityguige" parameterType="com.pojo.Commodityguige">
+        insert into commodityguige
+        (
+            `sumname`,
+            `price  `,
+            `cpid   `,
+            `gg1    `,
+            `gg2    `,
+            `gg3    `,
+            `comid  `,
+            `s1     `,
+            `s2     `
+
+        )
+        values(
+                  #{sumname}  ,
+                  #{price} ,
+                  #{cpid} ,
+                  #{gg1}  ,
+                  #{gg2} ,
+                  #{gg3} ,
+                  #{comid} ,
+                  #{s1} ,
+                  #{s2}
+              )
+    </insert>
+
+
+    <!-- 根据id删除某个lie信息 -->
+    <delete id="deleteCommodityguige" parameterType="java.lang.Integer">
+        delete from commodityguige
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 根据id更新biao信息 -->
+    <update id="editCommodityguige" parameterType="com.pojo.Commodityguige">
+        update commodityguige set
+                                 sumname= #{sumname}   ,
+                                 price  = #{price}   ,
+                                 cpid   = #{cpid}   ,
+                                 gg1    = #{gg1}   ,
+                                 gg2    = #{gg2}   ,
+                                 gg3    = #{gg3}   ,
+                                 comid  = #{comid}   ,
+                                 s1     = #{s1}   ,
+                                 s2     = #{s2}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="edCommodityguigej1" parameterType="java.lang.Integer">
+        update commodityguige set
+
+                                  gg1    = gg1-1
+
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

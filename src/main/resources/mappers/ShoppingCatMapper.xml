@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ShoppingCatMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.ShoppingCat">
+        <id     column="commodityid"        jdbcType="INTEGER"      property="commodityid"/>
+        <result column="commoditycolor"     jdbcType="VARCHAR"      property="commoditycolor"/>
+        <result column="commoditysum"       jdbcType="INTEGER"      property="commoditysum"/>
+        <result column="commodguige"        jdbcType="VARCHAR"      property="commodguige"/>
+        <result column="comid"              property="comid"        jdbcType="INTEGER"/>
+        <result column="commcolor"         property="commcolor"     jdbcType="VARCHAR"/>
+        <result column="commodstatus"       property="commodstatus" jdbcType="INTEGER"/>
+        <result column="upid"               property="upid"         jdbcType="INTEGER"/>
+        <result column="uid"                property="uid"          jdbcType="INTEGER"/>
+        <result column="price"              property="price"        jdbcType="DECIMAL"/>
+        <result column="udate"              property="udate"        jdbcType="DATE"/>
+        <result column="onid"               property="onid"         jdbcType="VARCHAR"/>
+        <association property="user" column="uid" javaType="com.pojo.User">
+            <id column="uid" jdbcType="INTEGER" property="uid"/>
+            <result column="upassword" jdbcType="VARCHAR" property="upassword"/>
+            <result column="uname" jdbcType="VARCHAR" property="uname"/>
+            <result column="uface" jdbcType="VARCHAR" property="uface"/>
+            <result column="ulname" jdbcType="VARCHAR" property="ulname"/>
+        </association>
+        <association property="commodity" column="comid"  javaType="com.pojo.Commodity">
+            <id column="commodityID" jdbcType="INTEGER" property="commodityID"/>
+            <result column="picture" jdbcType="VARCHAR" property="picture"/>
+            <result column="brand" jdbcType="TINYINT" property="brand"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="redname" jdbcType="VARCHAR" property="redname"/>
+            <result column="blackname" jdbcType="VARCHAR" property="blackname"/>
+            <result column="price" jdbcType="DECIMAL" property="price"/>
+            <result column="spell" jdbcType="VARCHAR" property="spell"/>
+            <result column="BYBT" jdbcType="TINYINT" property="BYBT"/>
+            <result column="adtime" jdbcType="DATE" property="adtime"/>
+            <result column="caid" jdbcType="INTEGER" property="caid"/>
+        </association>
+
+    </resultMap>
+    <resultMap id="UserPurseMap"  type="com.pojo.UserPurse" >
+        <id     column="pid" jdbcType="INTEGER" property="pid"/>
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="blance" jdbcType="DECIMAL" property="blance"/>
+        <result column="integral" jdbcType="INTEGER" property="integral"/>
+        <result column="buyafew" jdbcType="INTEGER" property="buyafew"/>
+        <result column="coupon" jdbcType="INTEGER" property="coupon"/>
+        <result column="couponid" jdbcType="INTEGER" property="couponid"/>
+        <result column="ljcz" jdbcType="INTEGER" property="ljcz"/>
+        <result column="xfe" jdbcType="INTEGER" property="xfe"/>
+        <association property="userpurse" resultMap="BaseResultMap"/>
+    </resultMap>
+    <select id="selectALLShoppingCat" resultMap="BaseResultMap">
+        select up.*,u.*
+        from user as u,shoppingcat as up
+        where u.uid=up.uid
+    </select>
+    <select id="getShoppingCatlist" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select up.*,c.*
+        from commodity as c,shoppingcat as up
+        where c.commodityID=up.comid and up.uid=#{uid}
+        order  by  up.udate ASC
+    </select>
+    <select id="getSUC" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select up.*,u.*
+        from commodity as u,shoppingcat as up
+        where u.commodityID=up.comid and up.commodityid=#{commodityid}
+    </select>
+    <select id="selectAllsUc" resultMap="BaseResultMap">
+        select up.*
+        from commodity as u,shoppingcat as up
+        where u.commodityID=up.uid
+    </select>
+
+
+    <select id="selectAlls0" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select up.*,c.*
+        from commodity as c,shoppingcat as up
+        where c.commodityID=up.comid
+          and up.uid=#{uid} and commodstatus=#{commodstatus}
+        order  by  up.udate desc
+    </select>
+
+    <select id="getShoppingCat" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            shoppingcat where commodityid=#{commodityid}
+    </select>
+    <select id="getShoppingCatByonid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from
+            shoppingcat where onid=#{onid}
+    </select>
+    <select id="getAllShoppingCat"  resultMap="BaseResultMap">
+        select * from shoppingcat
+    </select>
+    <insert id="addShoppingCat" parameterType="com.pojo.ShoppingCat">
+        insert into
+        shoppingcat(commoditycolor,
+        commoditysum,
+         commodguige,comid,commcolor,commodstatus,uid,upid,price,onid)
+        values
+        (#{commoditycolor}
+        ,#{commoditysum},
+         #{commodguige},
+         #{comid},#{commcolor},#{commodstatus},#{uid},#{upid},#{price},#{onid})
+    </insert>
+
+
+    <!-- 根据id删除某个lie信息 -->
+    <delete id="deleteShoppingCat" parameterType="java.lang.Integer">
+        delete from shoppingcat
+        where commodityid = #{commodityid,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 根据id更新biao信息 -->
+    <update id="editShoppingCat" parameterType="com.pojo.ShoppingCat">
+        update shoppingcat
+        set commoditycolor=#{commoditycolor},commoditysum=#{commoditysum},
+            commodguige=#{commodguige},comid=#{comid},commcolor=#{commcolor},
+            commodstatus=#{commodstatus},uid=#{uid},upid=#{upid}
+        where commodityid = #{commodityid,jdbcType=INTEGER}
+    </update>
+
+  
+</mapper>

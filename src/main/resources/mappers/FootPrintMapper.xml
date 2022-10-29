@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.FootPrintMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.FootPrint">
+        <id     column="fid"    jdbcType="INTEGER"  property="fid"   />
+        <result column="comid"  jdbcType="INTEGER"  property="comid"  />
+        <result column="ftime"  jdbcType="DATE"     property="ftime"  />
+        <result column="fname"  jdbcType="VARCHAR"  property="fname" />
+        <result column="zsy1"   jdbcType="VARCHAR"  property="zsy1"  />
+        <result column="zsy2"   jdbcType="VARCHAR"  property="zsy2"  />
+        <result column="uid"    jdbcType="INTEGER"  property="uid"   />
+        <association property="commodity" column="comid"  javaType="com.pojo.Commodity">
+            <id column="commodityID" jdbcType="INTEGER" property="commodityID"/>
+            <result column="picture" jdbcType="VARCHAR" property="picture"/>
+            <result column="brand" jdbcType="TINYINT" property="brand"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="redname" jdbcType="VARCHAR" property="redname"/>
+            <result column="blackname" jdbcType="VARCHAR" property="blackname"/>
+            <result column="price" jdbcType="DECIMAL" property="price"/>
+            <result column="spell" jdbcType="VARCHAR" property="spell"/>
+            <result column="BYBT" jdbcType="TINYINT" property="BYBT"/>
+            <result column="adtime" jdbcType="DATE" property="adtime"/>
+            <result column="caid" jdbcType="INTEGER" property="caid"/>
+        </association>
+    </resultMap>
+    <resultMap id="UserMap"  type="com.pojo.User" >
+        <id column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="upassword" jdbcType="VARCHAR" property="upassword"/>
+        <result column="uname" jdbcType="VARCHAR" property="uname"/>
+        <result column="uface" jdbcType="VARCHAR" property="uface"/>
+        <result column="ulname" jdbcType="VARCHAR" property="ulname"/>
+        <association property="user" resultMap="BaseResultMap"/>
+    </resultMap>
+    <select id="getFootPrint" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            footprint where fid=#{fid}
+    </select>
+
+    <select id="getFootPrintBycomid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            footprint where comid=#{comid}
+    </select>
+    <select id="getFootPrintBycomid1"  resultMap="BaseResultMap">
+        select * from
+            footprint where comid=#{comid} and uid=#{uid}
+    </select>
+    <select id="getAllFootPrint" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select  c.*,fp.* from commodity as c ,footprint as fp
+        where c.commodityID=fp.comid and fp.uid=#{uid}
+        ORDER BY fp.ftime desc
+    </select>
+    <insert id="addFootPrint" parameterType="com.pojo.FootPrint">
+        insert into footprint(comid,fname,zsy1,zsy2,uid)
+        values(#{comid},#{fname},#{zsy1},#{zsy2},#{uid})
+    </insert>
+    <select id="getFootprintByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from
+            footprint where `fname`=#{fname}
+    </select>
+
+    <!-- 根据id删除某个lie信息 -->
+    <delete id="deleteFootPrint" parameterType="java.lang.Integer">
+        delete from footprint
+        where comid = #{comid,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 根据id更新biao信息 -->
+    <update id="editFootPrint" parameterType="com.pojo.FootPrint">
+        update footprint
+        set comid=#{comid},
+            ftime=CURRENT_TIMESTAMP,
+            fname=#{fname},
+            zsy1=#{zsy1},
+            zsy2=#{zsy2},
+            uid=#{uid}
+        where fid = #{fid,jdbcType=INTEGER}
+    </update>
+
+    <update id="editFootPrintOrDate" parameterType="com.pojo.FootPrint">
+        update footprint
+        set
+            ftime=#{ftime}
+        where comid = #{comid,jdbcType=INTEGER}
+    </update>
+</mapper>

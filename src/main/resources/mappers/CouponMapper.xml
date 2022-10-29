@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CouponMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.Coupon">
+        <id column="couponid" jdbcType="INTEGER" property="couponid"/>
+        <result column="couponname" jdbcType="VARCHAR" property="couponname"/>
+        <result column="discountinformation" jdbcType="VARCHAR" property="discountinformation"/>
+        <result column="discount" jdbcType="VARCHAR" property="discount"/>
+        <result column="periodofvalidity" jdbcType="DATE" property="periodofvalidity"/>
+        <result column="discountprc" jdbcType="INTEGER" property="discountprc"/>
+    </resultMap>
+
+    <select id="getCoupon" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+        coupon where couponid=#{couponid}
+    </select>
+    <select id="getCouponByname" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from
+            coupon where couponname=#{couponname}
+    </select>
+    <select id="getAllCoupon"  resultMap="BaseResultMap">
+        select * from coupon
+    </select>
+
+    <insert id="addCoupon" parameterType="com.pojo.Coupon">
+        insert into coupon(`couponname`,`discountinformation`,`discount`,`periodofvalidity`,`discountprc`)
+        values(#{couponname},#{discountinformation},#{discount},#{periodofvalidity},#{discountprc})
+    </insert>
+
+
+    <!-- 根据id删除某个lie信息 -->
+    <delete id="deleteCoupon" parameterType="java.lang.Integer">
+        delete from coupon
+        where couponid = #{couponid,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 根据id更新biao信息 -->
+    <update id="editCoupon" parameterType="com.pojo.Coupon">
+        update coupon set
+        couponname=#{couponname},
+        discountinformation=#{discountinformation},
+        discount=#{discount},
+        periodofvalidity=#{periodofvalidity},
+        discountprc=#{discountprc}
+        where couponid = #{couponid,jdbcType=INTEGER}
+    </update>
+
+</mapper>

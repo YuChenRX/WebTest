@@ -1,0 +1,38 @@
+GET {{baseUrl}}/api/Commoditylist
+
+###
+GET {{baseUrl}}/api/Intergrallist
+
+###
+POST {{baseUrl}}/api/Login
+Content-Type: application/x-www-form-urlencoded
+
+uname=admin&upassword=123456
+
+
+###
+GET {{baseUrl}}/api/purselist
+
+###
+GET {{baseUrl}}/api/listpurse/1
+
+###
+PUT {{baseUrl}}/api/modpurse
+Content-Type: application/json
+
+{
+  "uid": 1,
+  "blance": 926530.0,
+  "integral": 513,
+  "buyafew": 25,
+  "coupon": 3,
+  "couponid": 1,
+  "pid": 1,
+  "xfe": 20785,
+  "ljcz": 15000,
+  "value": 0,
+  "user": null
+}
+
+###
+GET {{baseUrl}}/api/footprints?id=1

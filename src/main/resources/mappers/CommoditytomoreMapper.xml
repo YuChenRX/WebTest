@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CommoditytomoreMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.Commoditytomore">
+        <id     column="cmid"        jdbcType="INTEGER"              property="cmid" />
+        <result column="cp1"        jdbcType="VARCHAR"              property="cp1"/>
+        <result column="cp2"        jdbcType="VARCHAR"              property="cp2"/>
+        <result column="cp3"        jdbcType="VARCHAR"              property="cp3"/>
+        <result column="cp4"        jdbcType="VARCHAR"              property="cp4"/>
+        <result column="cp5"        jdbcType="VARCHAR"              property="cp5"/>
+        <result column="cp6"        jdbcType="VARCHAR"              property="cp6"/>
+        <result column="cp7"        jdbcType="VARCHAR"              property="cp7"/>
+        <result column="cp8"        jdbcType="VARCHAR"              property="cp8"/>
+        <result column="cp9"        jdbcType="VARCHAR"              property="cp9"/>
+        <result column="cp10"        jdbcType="VARCHAR"              property="cp10"/>
+        <result column="comid"        jdbcType="INTEGER"              property="comid"/>
+        <result column="pp"        jdbcType="VARCHAR"              property="pp"/>
+        <result column="fhd"        jdbcType="VARCHAR"              property="fhd"/>
+        <result column="pptp"        jdbcType="VARCHAR"              property="pptp"/>
+        <result column="ppsm"        jdbcType="VARCHAR"              property="ppsm"/>
+        <result column="renx"        jdbcType="VARCHAR"              property="renx"/>
+
+
+    </resultMap>
+
+
+    <select id="getAllCommoditytomore"  resultMap="BaseResultMap">
+        select * from commoditytomore
+    </select>
+
+    <insert id="addCommoditytomore" parameterType="com.pojo.Commoditytomore">
+        insert into commoditytomore
+        (
+        `cp1`,
+        `cp2`,
+        `cp3`,
+        `cp4`,
+        `cp5`,
+        `cp6`,
+        `cp7`,
+        `cp8`,
+        `cp9`,
+        `cp10` ,
+        `comid`,
+        `pp`,
+        `fhd`,
+        `pptp` ,
+        `ppsm` ,
+        `renx`
+        )
+        values(
+            #{cp1},
+            #{cp2},
+            #{cp3},
+            #{cp4},
+            #{cp5},
+            #{cp6},
+            #{cp7},
+            #{cp8},
+            #{cp9},
+            #{cp10},
+            #{comid},
+            #{pp},
+            #{fhd},
+            #{pptp},
+            #{ppsm},
+            #{renx}
+              )
+    </insert>
+
+
+    <!-- 根据id删除某个lie信息 -->
+    <delete id="deleteCommoditytomore" parameterType="java.lang.Integer">
+        delete from commoditytomore
+        where cmid = #{cmid,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 根据id更新biao信息 -->
+    <update id="editCommoditytomore" parameterType="com.pojo.Commoditytomore">
+        update commoditytomore set
+                cp1=#{cp1},
+                cp2=#{cp2},
+                cp3=#{cp3},
+                cp4=#{cp4},
+                cp5=#{cp5},
+                cp6=#{cp6},
+                cp7=#{cp7},
+                cp8=#{cp8},
+                cp9=#{cp9},
+                cp10=#{cp10},
+                comid=#{comid},
+                pp=#{pp},
+                fhd=#{fhd},
+                pptp=#{pptp},
+                ppsm=#{ppsm},
+                renx=#{renx}
+        where cmid = #{cmid,jdbcType=INTEGER}
+    </update>
+
+</mapper>

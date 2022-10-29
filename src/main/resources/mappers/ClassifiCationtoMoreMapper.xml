@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ClassifiCationtoMoreMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.ClassifiCationtoMore">
+        <id     column="ciid"       jdbcType="INTEGER"  property="ciid"  />
+        <result column="caid"       jdbcType="INTEGER"  property="caid"  />
+        <result column="cname"      jdbcType="VARCHAR"  property="cname"  />
+        <result column="cn1"        jdbcType="VARCHAR"  property="cn1"  />
+        <result column="cn2"        jdbcType="VARCHAR"  property="cn2"  />
+
+    </resultMap>
+
+    <select id="getClassifiCationtoMore" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            classificationtomore where caid=#{caid}
+    </select>
+    <select id="getClassifiCationtoMorebyname" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from
+            classificationtomore where cname=#{cname}
+    </select>
+    <select id="getAllClassifiCationtoMore"  resultMap="BaseResultMap">
+        select * from classificationtomore
+    </select>
+</mapper>

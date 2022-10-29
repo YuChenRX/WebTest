@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CoutouserMapper">
+    <resultMap id="BaseResultMap" type="com.pojo.Coutouser">
+        <id     column="kid"        jdbcType="INTEGER"  property="kid"  />
+        <result column="uid"        jdbcType="INTEGER"  property="uid"  />
+        <result column="cid"        jdbcType="INTEGER"  property="cid"  />
+        <result column="uname"      jdbcType="VARCHAR"  property="uname"  />
+        <result column="cname"      jdbcType="VARCHAR"  property="cname"  />
+        <result column="lzc1"       jdbcType="INTEGER"  property="lzc1"  />
+        <result column="lzc2"       jdbcType="INTEGER"  property="lzc2"/>
+        <association property="coupon" column="cid" javaType="com.pojo.Coupon">
+            <id column="couponid" jdbcType="INTEGER" property="couponid"/>
+            <result column="couponname" jdbcType="VARCHAR" property="couponname"/>
+            <result column="discountinformation" jdbcType="VARCHAR" property="discountinformation"/>
+            <result column="discount" jdbcType="VARCHAR" property="discount"/>
+            <result column="periodofvalidity" jdbcType="DATE" property="periodofvalidity"/>
+            <result column="discountprc" jdbcType="INTEGER" property="discountprc"/>
+
+        </association>
+    </resultMap>
+    <resultMap id="UserPurseMap"  type="com.pojo.UserPurse" >
+        <id     column="pid" jdbcType="INTEGER" property="pid"/>
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="blance" jdbcType="DECIMAL" property="blance"/>
+        <result column="integral" jdbcType="INTEGER" property="integral"/>
+        <result column="buyafew" jdbcType="INTEGER" property="buyafew"/>
+        <result column="coupon" jdbcType="INTEGER" property="coupon"/>
+        <result column="couponid" jdbcType="INTEGER" property="couponid"/>
+        <result column="ljcz" jdbcType="INTEGER" property="ljcz"/>
+        <result column="xfe" jdbcType="INTEGER" property="xfe"/>
+        <association property="userpurse" resultMap="BaseResultMap"/>
+    </resultMap>
+    <resultMap id="UserMap" type="com.pojo.User">
+            <id column="uid" jdbcType="INTEGER" property="uid"/>
+            <result column="upassword" jdbcType="VARCHAR" property="upassword"/>
+            <result column="uname" jdbcType="VARCHAR" property="uname"/>
+            <result column="uface" jdbcType="VARCHAR" property="uface"/>
+            <result column="ulname" jdbcType="VARCHAR" property="ulname"/>
+        <association property="user" resultMap="BaseResultMap"/>
+    </resultMap>
+
+    <select id="getCoutouser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            coutouser where kid=#{kid}
+    </select>
+
+    <select id="getCoutousertolzc2" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+            coutouser where lzc2=#{lzc2}
+    </select>
+    <select id="getsum"  resultType="java.lang.Integer">
+        select count(*) from
+        user as u ,coutouser as cr
+        where u.uid=cr.uid and u.uid=#{uid} and cr.lzc1=0
+    </select>
+    <select id="getAllCoutouser" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
+        select co.*,cr.* from
+        coupon as co ,coutouser as cr
+        where co.couponid=cr.cid
+          and cr.uid=#{uid} and cr.lzc1=0
+    </select>
+
+    <insert id="addCoutouser" parameterType="com.pojo.Coutouser">
+        insert into
+        coutouser(`uid`
+        ,`cid`
+        ,`uname`,`cname`
+        ,`lzc1`,`lzc2`)
+        values(#{uid},#{cid}
+        ,#{uname},#{cname},#{lzc1},#{lzc2})
+    </insert>
+
+    <!-- 根据id删除某个lie信息 -->
+    <delete id="deleteCoutouser" parameterType="java.lang.Integer">
+        delete from coutouser
+        where kid = #{kid,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 根据id更新biao信息 -->
+    <update id="editCoutouser" parameterType="com.pojo.Coutouser">
+        update coutouser set
+                             uid=#{uid},
+                             cid=#{cid},
+                             uname=#{uname},
+                             cname=#{cname},
+                             lzc1=#{lzc1},
+                             lzc2=#{lzc2}
+        where kid = #{kid,jdbcType=INTEGER}
+    </update>
+    <update id="editCoutousertolzc1" parameterType="java.lang.Integer">
+        update coutouser set
+
+                             lzc1=1
+        where kid = #{kid,jdbcType=INTEGER}
+    </update>
+    <update id="editCoutousertolzc1two" parameterType="java.lang.Integer">
+        update coutouser set
+
+            lzc1=0,lzc2=0
+        where kid = #{kid,jdbcType=INTEGER}
+    </update>
+    <update id="editCoutousertoMore" parameterType="java.lang.Integer">
+        update coutouser set
+
+            lzc1=1,lzc2=#{lzc2}
+        where kid = #{kid,jdbcType=INTEGER}
+    </update>
+
+</mapper>
