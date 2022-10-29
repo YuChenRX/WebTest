@@ -1,5 +1,7 @@
 package com.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ import java.text.DecimalFormat;
 @AllArgsConstructor
 @Data
 public class Commodityguige {
+    @TableId
     private int id        ;
     private String sumname    ;
     private double price    ;
@@ -21,7 +24,10 @@ public class Commodityguige {
     private int comid    ;
     private int s1    ;
     private int s2    ;
+    @TableField(exist = false)
     private int sum;
+    @TableField(exist = false)
+
     private int kid;
 
     public BigDecimal getPrice() {

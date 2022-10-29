@@ -22,43 +22,44 @@ public class UaddressController {
     @CrossOrigin
     @ResponseBody
     @GetMapping("api/listUaddress/{id}")
-    public Result getUaddress(@PathVariable("id") Integer id){
+    public Result getUaddress(@PathVariable("id") Integer id) {
         return ResultFactory.buildSuccessResult(uaddressService.getUaddress(id));
     }
+
     @CrossOrigin
     @ResponseBody
     @GetMapping("api/Uaddresslist/{id}")
-    public Result getAllUaddress(@PathVariable("id") Integer id){
+    public Result getAllUaddress(@PathVariable("id") Integer id) {
         return ResultFactory.buildSuccessResult(uaddressService.getAllUaddress(id));
     }
 
     @CrossOrigin
     @ResponseBody
     @PostMapping("api/addUaddress")
-    public Result addUaddress( Uaddress user, HttpSession sessionone, HttpServletRequest request){
-       boolean t= user.isMor();
-       if (t) {
+    public Result addUaddress(Uaddress user, HttpSession sessionone, HttpServletRequest request) {
+        boolean t = user.isMor();
+        if (t) {
 
-           return ResultFactory.buildResult(
-                   uaddressService.updatemor(),
-                   uaddressService.addUaddress(user));
-       }else {
-           return ResultFactory.buildSuccessResult(uaddressService.addUaddress(user));
-       }
+            return ResultFactory.buildResult(
+                    uaddressService.updatemor(),
+                    uaddressService.addUaddress(user));
+        } else {
+            return ResultFactory.buildSuccessResult(uaddressService.addUaddress(user));
+        }
 
     }
 
     @CrossOrigin
     @ResponseBody
     @PostMapping("api/modUaddress")
-    public Result modifyUaddress( Uaddress user){
-        boolean t= user.isMor();
+    public Result modifyUaddress(Uaddress user) {
+        boolean t = user.isMor();
         if (t) {
 
             return ResultFactory.buildResult(
                     uaddressService.updatemor(),
                     uaddressService.modifyUaddress(user));
-        }else {
+        } else {
             return ResultFactory.buildSuccessResult(uaddressService.modifyUaddress(user));
         }
 
@@ -67,7 +68,7 @@ public class UaddressController {
     @CrossOrigin
     @ResponseBody
     @PostMapping("api/delUaddress/{id}")
-    public Result deleteUaddress(@PathVariable("id") Integer id){
+    public Result deleteUaddress(@PathVariable("id") Integer id) {
         return ResultFactory.buildSuccessResult(uaddressService.deleteUaddress(id));
     }
 }

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,4 +35,6 @@ public class Commodity {
     private Commoditytomore commoditytomore;
     @TableField(exist = false)
     private Commodityguige commodityguige;
+    @TableField(exist = false)
+    List<Commodityguige> commodityguigeList;
 }

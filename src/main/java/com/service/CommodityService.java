@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.event.ProductVisitedEvent;
 import com.mapper.CommodityMapper;
+import com.mapper.CommodityguigeMapper;
 import com.pojo.Commodity;
 
+import com.pojo.Commodityguige;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CommodityService extends ServiceImpl<CommodityMapper, Commodity> {
+    private final CommodityguigeMapper commodityguigeMapper;
     private final CommodityMapper commodityMapper;
     private final ApplicationEventPublisher publisher;
 
@@ -43,11 +46,12 @@ public class CommodityService extends ServiceImpl<CommodityMapper, Commodity> {
     }
     public List<Commodity> getAllBytime(){
 
-        return commodityMapper.getAllcommodityByTime();
+        return commodityMapper.selectList(new LambdaQueryWrapper<Commodity>()
+                .orderBy(true,false,Commodity::getAdtime));
     }
     public List<Commodity> getAllByUP(){
 
-        return commodityMapper.getAllcommodityByUpPerice();
+        return null;
     }
     public List<Commodity> getAllByDown(){
 
@@ -86,6 +90,10 @@ public class CommodityService extends ServiceImpl<CommodityMapper, Commodity> {
         LambdaQueryWrapper<Commodity> condition = new LambdaQueryWrapper<Commodity>()
             .eq(Commodity::getCommodityID, id);
         Commodity one = getOne(condition);
+
+        List<Commodityguige> commodityguige = commodityguigeMapper.selectList(new LambdaQueryWrapper<Commodityguige>().eq(Commodityguige::getComid, id));
+        one.setCommodityguigeList(commodityguige);
+
 
         if (source.equals("others")) {
             publisher.publishEvent(new ProductVisitedEvent(this, one, uid));
