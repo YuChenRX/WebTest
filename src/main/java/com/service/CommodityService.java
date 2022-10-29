@@ -78,7 +78,10 @@ public class CommodityService extends ServiceImpl<CommodityMapper, Commodity> {
 
     public List<Commodity> getCommodityBycaid(int id){
 
-        return commodityMapper.getCommodityBycaid(id);
+//        return commodityMapper.getCommodityBycaid(id);
+        LambdaQueryWrapper<Commodity> condition = new LambdaQueryWrapper<Commodity>()
+            .eq(Commodity::getCaid, id);
+        return list(condition);
     }
 
     public List<Commodity> getCommodityLike(String mh){

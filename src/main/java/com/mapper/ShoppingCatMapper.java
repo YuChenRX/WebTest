@@ -1,5 +1,6 @@
 package com.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pojo.Collect;
 import com.pojo.ShoppingCat;
 import com.pojo.UserPurse;
@@ -9,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface ShoppingCatMapper {
+public interface ShoppingCatMapper extends BaseMapper<ShoppingCat> {
     ShoppingCat getShoppingCat(Integer id);
 
     ShoppingCat getShoppingCatByonid(String onid);

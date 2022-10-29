@@ -1,5 +1,6 @@
 package com.service;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mapper.ShoppingCatMapper;
 import com.mapper.UserMapper;
 import com.pojo.ShoppingCat;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ShoppingCatService {
+public class ShoppingCatService extends ServiceImpl<ShoppingCatMapper, ShoppingCat> {
     @Autowired
     private ShoppingCatMapper shoppingCatMapper;
 
@@ -40,7 +41,8 @@ public class ShoppingCatService {
     }
 
     public List<ShoppingCat> getAllShoppingCat(){
-        return shoppingCatMapper.getAllShoppingCat();
+//        return shoppingCatMapper.getAllShoppingCat();
+        return list();
     }
     public List<ShoppingCat>selectALLUserPurse(){
         return shoppingCatMapper.selectALLShoppingCat();

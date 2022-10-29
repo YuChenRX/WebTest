@@ -36,3 +36,10 @@ Content-Type: application/json
 
 ###
 GET {{baseUrl}}/api/footprints?id=1
+
+###
+GET {{baseUrl}}/api/getCommodityBycaid/1
+
+
+###
+GET {{baseUrl}}/api/ShoppingCatlist
