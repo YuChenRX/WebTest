@@ -4,10 +4,7 @@ import com.result.Result;
 import com.result.ResultFactory;
 import com.service.OrderClassService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/order")
@@ -17,6 +14,7 @@ public class OrderClassController {
     OrderClassService service;
 
     @GetMapping("/{id}")
+    @CrossOrigin
     public Result findByUserId(@PathVariable int id) {
         return ResultFactory.buildSuccessResult(service.getOrderClassByUserId(id));
     }
